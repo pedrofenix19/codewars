@@ -12,5 +12,7 @@ evenTo3 n = [x*2 | x <- [1..floor (n/2)]]
 evenTo4 n = [x | x <- [1..n], x `mod` 2 == 0]
 
 isPrime :: Int -> Bool
-isPrime n = if null [x | x <- [2..ceiling (sqrt n)], n `mod` x == 0] then True else False
+isPrime n = if null [x | x <- [2..ceiling (sqrt (n::Double))], n `mod` x == 0] then True else False
 primesUpTo n = [x | x <- [1..n], isPrime x]
+substring :: [Char] -> Int -> Int -> [Char]
+substring str start end = [ str!!x | x <- [start..end] ]
