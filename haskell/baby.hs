@@ -64,3 +64,25 @@ primesUpTo2 n = [x | x <- [1..n], isPrime x]
     where isPrime n 
             | [x | x <- [2..n-1], n `mod` x == 0] == [] = True 
             | otherwise = False
+
+cylinder :: (RealFloat a) => a -> a -> a
+cylinder r h = 
+    let sideArea = 2 * pi * r * h
+        topArea = pi * r^2
+    in sideArea + 2 * topArea
+
+maxPedro :: (Ord a) => [a] -> a
+maxPedro [] = error "Lista vacia"
+maxPedro (x:[]) = x
+maxPedro (x:xs)
+    | x > maxPedro xs = x
+    | otherwise = maxPedro xs
+
+replicatePedro :: t -> Int -> [t]
+replicatePedro x 0 = []
+replicatePedro x 1 = [x]
+replicatePedro x n = x:replicatePedro x (n-1)
+
+takePedro :: (Num n) => n -> [x] -> [x]
+takePedro 0 x = x
+takePedro n (xs:[]) 
