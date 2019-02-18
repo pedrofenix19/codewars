@@ -1,0 +1,32 @@
+<html>
+    <head></head>
+    <body>
+
+        <script>
+            class Perro{
+                constructor(nombre){
+                    this.nombre = nombre;
+                }
+
+                sayName(){
+                    console.log("el nombre del perro es " + this.nombre);
+                }
+
+                static bark(){
+                    console.log("Guau");
+                }
+            }    
+
+            try{
+                var boby = new Perro("bobby");
+                boby.sayName();
+                Perro.bark();
+                console.log("voy a hacer algo que da error");
+                Perro.sayName();
+                console.log("voy a hacer algo que da error");
+            }catch(e){
+                console.log("hubo un error");
+            }
+        </script>
+    </body>
+</html>

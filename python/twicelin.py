@@ -8,3 +8,12 @@ def dbl_linear(n):
         b.insort(u,z)
 
     return list(set(u))[n]
+
+
+u = [1]
+for x in range(40):
+    y, z = 2 * u[x] + 1, 3 * u[x] + 1
+    b.insort(u,y)
+    b.insort(u,z)
+
+print(u)
