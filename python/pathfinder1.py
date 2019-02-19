@@ -1,4 +1,4 @@
-def getPossibleNextPositions(mazearr, pos):
+def get_possible_next_positions(mazearr, pos):
     pnp = []
     #if can move down
     if pos[0] < len(mazearr) - 1 and mazearr[pos[0] + 1][pos[1]] != "W":
@@ -23,10 +23,9 @@ def path_finder(maze):
     closed_paths = []
     while len(open_paths) > 0:
         current_path = open_paths.pop(0)
-        pnp = getPossibleNextPositions(mazearr, current_path[-1])
+        pnp = get_possible_next_positions(mazearr, current_path[-1])
 
         if any([ mazearr[x[0]][x[1]] == "G" for x in pnp]):
-            print("Llego con " + str(current_path))
             return True
 
         for i in pnp:
