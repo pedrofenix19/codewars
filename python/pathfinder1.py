@@ -1,42 +1,39 @@
 def getPossibleNextPositions(mazearr, pos):
     pnp = []
-    print("maze " + str(mazearr))
-    print("maze " + str(pos[0]))
     #if can move down
-    if pos[0] < len(mazearr) - 1 and mazearr[pos[0] + 1] != "W":
+    if pos[0] < len(mazearr) - 1 and mazearr[pos[0] + 1][pos[1]] != "W":
         pnp.append((pos[0] + 1, pos[1]))
     #if can move right
-    if pos[1] <= len(mazearr) - 1 and mazearr[pos[1] + 1] != "W":
+    if pos[1] < len(mazearr) - 1 and mazearr[pos[0]][pos[1] + 1] != "W":
         pnp.append((pos[0], pos[1] + 1))
     #if can move left
-    if pos[1] > 0 and mazearr[pos(1) - 1] != "W":
+    if pos[1] > 0 and mazearr[pos[0]][pos[1] - 1] != "W":
         pnp.append((pos[0], pos[1] - 1))
     #if can move up
-    if pos[0] > 0 and mazearr[pos(0) - 1] != "W":
+    if pos[0] > 0 and mazearr[pos[0] - 1][pos[1]] != "W":
         pnp.append((pos[0] - 1, pos[1]))
 
     return pnp
 
 def path_finder(maze):
     mazearr = maze.split("\n")
-    print(str(mazearr))
     n = len(mazearr)
     mazearr[n-1] = mazearr[n-1][:-1] + "G"
-    print(str(mazearr))
-    paths = [[(0,0)]]
-    i = 0
-    while i < len(paths):
-        p = paths.pop(0)
-        print("p es " + str(p))
-        pnp = getPossibleNextPositions(mazearr, p[-1])
+    open_paths = [[(0,0)]]
+    closed_paths = []
+    while len(open_paths) > 0:
+        current_path = open_paths.pop(0)
+        pnp = getPossibleNextPositions(mazearr, current_path[-1])
+
         if any([ mazearr[x[0]][x[1]] == "G" for x in pnp]):
+            print("Llego con " + str(current_path))
             return True
 
         for i in pnp:
-            if all([x[len(x) - 1][0] != i[0] and x[len(x) - 1][1] != i[1] for x in paths]):
-                paths.append(p + [i])
+            if all([x[-1] != i for x in closed_paths]):
+                open_paths.append(current_path + [i])
 
-        i += 1
+        closed_paths.append(current_path)
 
     return False 
 
@@ -72,5 +69,14 @@ d = "\n".join([
   "....W."
 ])
 
-for i in [a,b,c,d]:
-    print(str(path_finder(i)))
+e = "\n".join([
+  ".W....",
+  ".W.WW.",
+  ".W.W..",
+  ".W.W.W",
+  ".W.W..",
+  "...W.."
+])
+
+for i in [e]:
+    print("*********************************************************" + str(path_finder(i)))
