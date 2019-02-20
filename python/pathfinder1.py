@@ -21,7 +21,6 @@ def get_possible_next_positions(mazearr, pos):
 def path_finder(maze):
     mazearr = maze.split("\n")
     n = len(mazearr)
-    mazearr[n-1] = mazearr[n-1][:-1] + "G"
     open_points = [(0,0)]
     closed_points = []
     while len(open_points) > 0:
