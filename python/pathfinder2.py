@@ -21,22 +21,21 @@ def get_possible_next_positions(mazearr, pos):
 def path_finder(maze):
     mazearr = maze.split("\n")
     n = len(mazearr)
-    open_points = [(0,0)]
-    closed_points = []
-    while len(open_points) > 0:
-        current_point = open_points.pop(0)
-        pnp = get_possible_next_positions(mazearr, current_point)
+    mazearr[n-1] = mazearr[n-1][:-1] + "G"
+    open_paths = [[(0,0)]]
+    closed_paths = []
+    while len(open_paths) > 0:
+        current_path = open_paths.pop(0)
+        pnp = get_possible_next_positions(mazearr, current_path[-1])
 
-        if any([ x == (n-1,n-1) for x in pnp]):
+        if any([ mazearr[x[0]][x[1]] == "G" for x in pnp]):
             return True
 
         for i in pnp:
-            if any([x == i for x in closed_points]):
-                break
-            
-            open_points.append(i)
+            if all([x[-1] != i for x in closed_paths]):
+                open_paths.append(current_path + [i])
 
-        closed_points.append(current_point)
+        closed_paths.append(current_path)
 
     return False 
 
