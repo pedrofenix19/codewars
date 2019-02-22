@@ -31,10 +31,8 @@ def path_finder(maze):
             return True
 
         for i in pnp:
-            if any([x == i for x in closed_points]):
-                break
-            
-            open_points.append(i)
+            if not i in closed_points:
+                open_points.append(i)
 
         closed_points.append(current_point)
 
