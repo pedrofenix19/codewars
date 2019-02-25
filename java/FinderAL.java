@@ -1,10 +1,10 @@
 import java.awt.Point;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class Finder {
 
-    static LinkedList<Point> getPossibleNextPositions(String[] mazearr, Point currentPosition){
-        LinkedList<Point> possibleNextPositions = new LinkedList<Point>();
+    static ArrayList<Point> getPossibleNextPositions(String[] mazearr, Point currentPosition){
+        ArrayList<Point> possibleNextPositions = new ArrayList<Point>(4);
         int n = mazearr.length;
 
         //if can move down
@@ -35,20 +35,20 @@ public class Finder {
         String[] mazearr = maze.split("\n");
         int n = mazearr.length;
         if(mazearr[n-1].endsWith("W")) return false;
-        LinkedList<Point> openPoints = new LinkedList<Point>();
+        ArrayList<Point> openPoints = new ArrayList<Point>(n * n);
         openPoints.add(new Point(0,0));
-        LinkedList<Point> closedPoints = new LinkedList<Point>();
+        ArrayList<Point> closedPoints = new ArrayList<Point>(n * n);
 
         while (openPoints.size() > 0) {
             Point currentPoint = openPoints.remove(0);
-            LinkedList<Point> possibleNextPoints = getPossibleNextPositions(mazearr, currentPoint);
+            ArrayList<Point> possibleNextPoints = getPossibleNextPositions(mazearr, currentPoint);
 
             for (Point p : possibleNextPoints) {
                 if(p.x == n -1 && p.y == n - 1) return true;
             }
 
             for (Point p : possibleNextPoints) {
-                if(!closedPoints.contains(p) && !openPoints.contains(p)) openPoints.add(p);
+                if(!closedPoints.contains(p)) openPoints.add(p);
             }
             closedPoints.add(currentPoint);
         }
