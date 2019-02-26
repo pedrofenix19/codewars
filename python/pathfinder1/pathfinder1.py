@@ -148,7 +148,10 @@ def main():
     "............."
     ])
 
-    for i in [a,b,c,d,e,f,g,h,i,j]:
+    for x in range(50):
+      for i in [a,b,c,d,e,f,g,h,i,j]:
         print(str(path_finder(i)))
+
+
 
 cProfile.run('main()')
