@@ -1,0 +1,807 @@
+JAVA PROFILE 1.0.1, created Mon Feb 25 17:12:38 2019
+
+Copyright (c) 2003, 2005, Oracle and/or its affiliates. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in the
+    documentation and/or other materials provided with the distribution.
+
+  - Neither the name of Oracle nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+Header for -agentlib:hprof (or -Xrunhprof) ASCII Output (JDK 5.0 JVMTI based)
+
+WARNING!  This file format is under development, and is subject to
+change without notice.
+
+This file contains the following types of records:
+
+THREAD START
+THREAD END      mark the lifetime of Java threads
+
+TRACE           represents a Java stack trace.  Each trace consists
+                of a series of stack frames.  Other records refer to
+                TRACEs to identify (1) where object allocations have
+                taken place, (2) the frames in which GC roots were
+                found, and (3) frequently executed methods.
+
+HEAP DUMP       is a complete snapshot of all live objects in the Java
+                heap.  Following distinctions are made:
+
+                ROOT    root set as determined by GC
+                CLS     classes 
+                OBJ     instances
+                ARR     arrays
+
+SITES           is a sorted list of allocation sites.  This identifies
+                the most heavily allocated object types, and the TRACE
+                at which those allocations occurred.
+
+CPU SAMPLES     is a statistical profile of program execution.  The VM
+                periodically samples all running threads, and assigns
+                a quantum to active TRACEs in those threads.  Entries
+                in this record are TRACEs ranked by the percentage of
+                total quanta they consumed; top-ranked TRACEs are
+                typically hot spots in the program.
+
+CPU TIME        is a profile of program execution obtained by measuring
+                the time spent in individual methods (excluding the time
+                spent in callees), as well as by counting the number of
+                times each method is called. Entries in this record are
+                TRACEs ranked by the percentage of total CPU time. The
+                "count" field indicates the number of times each TRACE 
+                is invoked.
+
+MONITOR TIME    is a profile of monitor contention obtained by measuring
+                the time spent by a thread waiting to enter a monitor.
+                Entries in this record are TRACEs ranked by the percentage
+                of total monitor contention time and a brief description
+                of the monitor.  The "count" field indicates the number of 
+                times the monitor was contended at that TRACE.
+
+MONITOR DUMP    is a complete snapshot of all the monitors and threads in 
+                the System.
+
+HEAP DUMP, SITES, CPU SAMPLES|TIME and MONITOR DUMP|TIME records are generated 
+at program exit.  They can also be obtained during program execution by typing 
+Ctrl-\ (on Solaris) or by typing Ctrl-Break (on Win32).
+
+--------
+
+THREAD START (obj=50000180, id = 200002, name="HPROF gc_finish watcher", group="system")
+THREAD START (obj=50000190, id = 200001, name="main", group="main")
+THREAD END (id = 200001)
+THREAD START (obj=500001c6, id = 200003, name="DestroyJavaVM", group="main")
+THREAD END (id = 200003)
+TRACE 302079: (thread=200001)
+	java.util.ArrayList.indexOf(ArrayList.java:Unknown line)
+	java.util.ArrayList.contains(ArrayList.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302081: (thread=200001)
+	java.awt.Point.equals(Point.java:Unknown line)
+	java.util.ArrayList.indexOf(ArrayList.java:Unknown line)
+	java.util.ArrayList.contains(ArrayList.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302082: (thread=200001)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302078: (thread=200001)
+	java.util.ArrayList$Itr.next(ArrayList.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302068: (thread=200001)
+	java.util.ArrayList.ensureCapacityInternal(ArrayList.java:Unknown line)
+	java.util.ArrayList.add(ArrayList.java:Unknown line)
+	Finderal.getPossibleNextPositions(Finderal.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302070: (thread=200001)
+	Finderal.getPossibleNextPositions(Finderal.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302075: (thread=200001)
+	java.util.ArrayList$Itr.hasNext(ArrayList.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302080: (thread=200001)
+	java.util.ArrayList.contains(ArrayList.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302055: (thread=200001)
+	java.util.ArrayList.add(ArrayList.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302074: (thread=200001)
+	java.util.ArrayList.access$000(ArrayList.java:Unknown line)
+	java.util.ArrayList$Itr.hasNext(ArrayList.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302069: (thread=200001)
+	java.util.ArrayList.add(ArrayList.java:Unknown line)
+	Finderal.getPossibleNextPositions(Finderal.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302076: (thread=200001)
+	java.util.ArrayList$Itr.checkForComodification(ArrayList.java:Unknown line)
+	java.util.ArrayList$Itr.next(ArrayList.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302054: (thread=200001)
+	java.util.ArrayList.ensureCapacityInternal(ArrayList.java:Unknown line)
+	java.util.ArrayList.add(ArrayList.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302065: (thread=200001)
+	java.awt.Point.<init>(Point.java:Unknown line)
+	Finderal.getPossibleNextPositions(Finderal.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302077: (thread=200001)
+	java.util.ArrayList.access$000(ArrayList.java:Unknown line)
+	java.util.ArrayList$Itr.next(ArrayList.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302073: (thread=200001)
+	java.util.ArrayList.iterator(ArrayList.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302059: (thread=200001)
+	java.util.ArrayList.remove(ArrayList.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302062: (thread=200001)
+	java.util.ArrayList.<init>(ArrayList.java:Unknown line)
+	Finderal.getPossibleNextPositions(Finderal.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302064: (thread=200001)
+	java.awt.geom.Point2D.<init>(Point2D.java:Unknown line)
+	java.awt.Point.<init>(Point.java:Unknown line)
+	Finderal.getPossibleNextPositions(Finderal.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302066: (thread=200001)
+	java.util.ArrayList.calculateCapacity(ArrayList.java:Unknown line)
+	java.util.ArrayList.ensureCapacityInternal(ArrayList.java:Unknown line)
+	java.util.ArrayList.add(ArrayList.java:Unknown line)
+	Finderal.getPossibleNextPositions(Finderal.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302060: (thread=200001)
+	java.util.AbstractCollection.<init>(AbstractCollection.java:Unknown line)
+	java.util.AbstractList.<init>(AbstractList.java:Unknown line)
+	java.util.ArrayList.<init>(ArrayList.java:Unknown line)
+	Finderal.getPossibleNextPositions(Finderal.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302061: (thread=200001)
+	java.util.AbstractList.<init>(AbstractList.java:Unknown line)
+	java.util.ArrayList.<init>(ArrayList.java:Unknown line)
+	Finderal.getPossibleNextPositions(Finderal.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302063: (thread=200001)
+	java.lang.String.charAt(String.java:Unknown line)
+	Finderal.getPossibleNextPositions(Finderal.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 300657: (thread=200001)
+	sun.misc.URLClassPath$3.run(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath$3.run(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getNextLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getResource(URLClassPath.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader.findClass(URLClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:Unknown line)
+TRACE 302072: (thread=200001)
+	java.util.ArrayList$Itr.<init>(ArrayList.java:Unknown line)
+	java.util.ArrayList.iterator(ArrayList.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302288: (thread=200001)
+	sun.misc.FDBigInteger.mult(FDBigInteger.java:Unknown line)
+	sun.misc.FDBigInteger.<clinit>(FDBigInteger.java:Unknown line)
+	sun.misc.FloatingDecimal$BinaryToASCIIBuffer.dtoa(FloatingDecimal.java:Unknown line)
+	sun.misc.FloatingDecimal$BinaryToASCIIBuffer.access$100(FloatingDecimal.java:Unknown line)
+	sun.misc.FloatingDecimal.getBinaryToASCIIConverter(FloatingDecimal.java:Unknown line)
+	sun.misc.FloatingDecimal.getBinaryToASCIIConverter(FloatingDecimal.java:Unknown line)
+	sun.misc.FloatingDecimal.appendTo(FloatingDecimal.java:Unknown line)
+	java.lang.AbstractStringBuilder.append(AbstractStringBuilder.java:Unknown line)
+	java.lang.StringBuilder.append(StringBuilder.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302053: (thread=200001)
+	java.util.ArrayList.ensureExplicitCapacity(ArrayList.java:Unknown line)
+	java.util.ArrayList.ensureCapacityInternal(ArrayList.java:Unknown line)
+	java.util.ArrayList.add(ArrayList.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302067: (thread=200001)
+	java.util.ArrayList.ensureExplicitCapacity(ArrayList.java:Unknown line)
+	java.util.ArrayList.ensureCapacityInternal(ArrayList.java:Unknown line)
+	java.util.ArrayList.add(ArrayList.java:Unknown line)
+	Finderal.getPossibleNextPositions(Finderal.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 300024: (thread=200001)
+	java.lang.Class.getClassLoader(Class.java:Unknown line)
+	java.lang.Class.desiredAssertionStatus(Class.java:Unknown line)
+	java.lang.invoke.MethodHandle.<clinit>(MethodHandle.java:Unknown line)
+TRACE 300084: (thread=200001)
+	java.lang.ref.WeakReference.<init>(WeakReference.java:Unknown line)
+	java.lang.ClassValue$Entry.<init>(ClassValue.java:Unknown line)
+	java.lang.ClassValue$Entry.<clinit>(ClassValue.java:Unknown line)
+	java.lang.ClassValue$Version.<init>(ClassValue.java:Unknown line)
+	java.lang.ClassValue.<init>(ClassValue.java:Unknown line)
+	java.lang.invoke.MethodHandleImpl$4.<init>(MethodHandleImpl.java:Unknown line)
+	java.lang.invoke.MethodHandleImpl.<clinit>(MethodHandleImpl.java:Unknown line)
+	java.lang.invoke.MethodHandle.<clinit>(MethodHandle.java:Unknown line)
+TRACE 300094: (thread=200001)
+	java.lang.invoke.MethodHandleImpl.<clinit>(MethodHandleImpl.java:Unknown line)
+	java.lang.invoke.MethodHandle.<clinit>(MethodHandle.java:Unknown line)
+TRACE 300139: (thread=200001)
+	java.lang.invoke.MethodHandleStatics$1.run(MethodHandleStatics.java:Unknown line)
+	java.lang.invoke.MethodHandleStatics$1.run(MethodHandleStatics.java:Unknown line)
+	java.lang.invoke.MethodHandleStatics.<clinit>(MethodHandleStatics.java:Unknown line)
+	java.lang.invoke.MethodHandle.<clinit>(MethodHandle.java:Unknown line)
+TRACE 300170: (thread=200001)
+	java.lang.invoke.MethodHandle.<clinit>(MethodHandle.java:Unknown line)
+TRACE 300240: (thread=200001)
+	java.lang.AbstractStringBuilder.append(AbstractStringBuilder.java:Unknown line)
+	java.lang.StringBuilder.append(StringBuilder.java:Unknown line)
+	sun.misc.PostVMInitHook.getConfigFilePrivileged(PostVMInitHook.java:Unknown line)
+	sun.misc.PostVMInitHook.trackJavaUsage(PostVMInitHook.java:Unknown line)
+	sun.misc.PostVMInitHook.run(PostVMInitHook.java:Unknown line)
+TRACE 300390: (thread=200001)
+	java.util.concurrent.ConcurrentHashMap.putVal(ConcurrentHashMap.java:Unknown line)
+	java.util.concurrent.ConcurrentHashMap.putIfAbsent(ConcurrentHashMap.java:Unknown line)
+	java.lang.ClassLoader.getClassLoadingLock(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:Unknown line)
+TRACE 300446: (thread=200001)
+	java.util.Stack.peek(Stack.java:Unknown line)
+	java.util.Stack.pop(Stack.java:Unknown line)
+	sun.misc.URLClassPath.getLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getNextLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getResource(URLClassPath.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader.findClass(URLClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:Unknown line)
+TRACE 300462: (thread=200001)
+	java.lang.AbstractStringBuilder.ensureCapacityInternal(AbstractStringBuilder.java:Unknown line)
+	java.lang.AbstractStringBuilder.append(AbstractStringBuilder.java:Unknown line)
+	java.lang.StringBuilder.append(StringBuilder.java:Unknown line)
+	sun.net.util.URLUtil.urlNoFragString(URLUtil.java:Unknown line)
+	sun.misc.URLClassPath.getLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getNextLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getResource(URLClassPath.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader.findClass(URLClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:Unknown line)
+TRACE 300535: (thread=200001)
+	java.lang.StringBuffer.append(StringBuffer.java:Unknown line)
+	java.net.URLStreamHandler.toExternalForm(URLStreamHandler.java:Unknown line)
+	java.net.URL.toExternalForm(URL.java:Unknown line)
+	java.net.URL.toString(URL.java:Unknown line)
+	java.lang.String.valueOf(String.java:Unknown line)
+	java.lang.StringBuilder.append(StringBuilder.java:Unknown line)
+	sun.misc.URLClassPath$JarLoader.<init>(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath$3.run(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath$3.run(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getNextLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getResource(URLClassPath.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader.findClass(URLClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:Unknown line)
+TRACE 300540: (thread=200001)
+	java.net.URLStreamHandler.toExternalForm(URLStreamHandler.java:Unknown line)
+	java.net.URL.toExternalForm(URL.java:Unknown line)
+	java.net.URL.toString(URL.java:Unknown line)
+	java.lang.String.valueOf(String.java:Unknown line)
+	java.lang.StringBuilder.append(StringBuilder.java:Unknown line)
+	sun.misc.URLClassPath$JarLoader.<init>(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath$3.run(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath$3.run(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getNextLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getResource(URLClassPath.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader.findClass(URLClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:Unknown line)
+TRACE 300597: (thread=200001)
+	java.io.UnixFileSystem.normalize(UnixFileSystem.java:Unknown line)
+	java.io.File.<init>(File.java:Unknown line)
+	sun.misc.URLClassPath$JarLoader.<init>(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath$3.run(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath$3.run(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getNextLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getResource(URLClassPath.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader.findClass(URLClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:Unknown line)
+TRACE 300638: (thread=200001)
+	java.util.Arrays.copyOf(Arrays.java:Unknown line)
+	java.lang.StringCoding.safeTrim(StringCoding.java:Unknown line)
+	java.lang.StringCoding.access$300(StringCoding.java:Unknown line)
+	java.lang.StringCoding$StringEncoder.encode(StringCoding.java:Unknown line)
+	java.lang.StringCoding.encode(StringCoding.java:Unknown line)
+	java.lang.String.getBytes(String.java:Unknown line)
+	java.io.UnixFileSystem.getBooleanAttributes(UnixFileSystem.java:Unknown line)
+	java.io.File.exists(File.java:Unknown line)
+	sun.misc.URLClassPath$JarLoader.<init>(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath$3.run(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath$3.run(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getNextLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getResource(URLClassPath.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader.findClass(URLClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:Unknown line)
+TRACE 300643: (thread=200001)
+	java.lang.String.getBytes(String.java:Unknown line)
+	java.io.UnixFileSystem.getBooleanAttributes(UnixFileSystem.java:Unknown line)
+	java.io.File.exists(File.java:Unknown line)
+	sun.misc.URLClassPath$JarLoader.<init>(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath$3.run(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath$3.run(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getNextLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getResource(URLClassPath.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader.findClass(URLClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:Unknown line)
+TRACE 300656: (thread=200001)
+	sun.misc.URLClassPath$JarLoader.<init>(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath$3.run(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath$3.run(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getNextLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getResource(URLClassPath.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader.findClass(URLClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:Unknown line)
+TRACE 300884: (thread=200001)
+	java.net.URLStreamHandler.parseURL(URLStreamHandler.java:Unknown line)
+	sun.net.www.protocol.file.Handler.parseURL(Handler.java:Unknown line)
+	java.net.URL.<init>(URL.java:Unknown line)
+	java.net.URL.<init>(URL.java:Unknown line)
+	sun.misc.URLClassPath$FileLoader.getResource(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getResource(URLClassPath.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader.findClass(URLClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:Unknown line)
+TRACE 300985: (thread=200001)
+	sun.misc.URLClassPath$FileLoader.getResource(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getResource(URLClassPath.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader.findClass(URLClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:Unknown line)
+TRACE 301076: (thread=200001)
+	sun.misc.Perf$GetPerfAction.run(Perf.java:Unknown line)
+	sun.misc.Perf$GetPerfAction.run(Perf.java:Unknown line)
+	sun.misc.PerfCounter.<clinit>(PerfCounter.java:Unknown line)
+	java.net.URLClassLoader.defineClass(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader.access$100(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader.findClass(URLClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:Unknown line)
+TRACE 301127: (thread=200001)
+	java.nio.DirectByteBuffer.asLongBuffer(DirectByteBuffer.java:Unknown line)
+	sun.misc.PerfCounter.<init>(PerfCounter.java:Unknown line)
+	sun.misc.PerfCounter.newPerfCounter(PerfCounter.java:Unknown line)
+	sun.misc.PerfCounter$CoreCounters.<clinit>(PerfCounter.java:Unknown line)
+	sun.misc.PerfCounter.getReadClassBytesTime(PerfCounter.java:Unknown line)
+	java.net.URLClassLoader.defineClass(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader.access$100(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader.findClass(URLClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:Unknown line)
+TRACE 301196: (thread=200001)
+	java.security.SecureClassLoader.getPermissions(SecureClassLoader.java:Unknown line)
+	java.net.URLClassLoader.getPermissions(URLClassLoader.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.getPermissions(Launcher.java:Unknown line)
+	java.security.SecureClassLoader.getProtectionDomain(SecureClassLoader.java:Unknown line)
+	java.security.SecureClassLoader.defineClass(SecureClassLoader.java:Unknown line)
+	java.net.URLClassLoader.defineClass(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader.access$100(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader.findClass(URLClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:Unknown line)
+TRACE 301247: (thread=200001)
+	sun.net.www.protocol.file.Handler.createFileURLConnection(Handler.java:Unknown line)
+	sun.net.www.protocol.file.Handler.openConnection(Handler.java:Unknown line)
+	sun.net.www.protocol.file.Handler.openConnection(Handler.java:Unknown line)
+	java.net.URL.openConnection(URL.java:Unknown line)
+	java.net.URLClassLoader.getPermissions(URLClassLoader.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.getPermissions(Launcher.java:Unknown line)
+	java.security.SecureClassLoader.getProtectionDomain(SecureClassLoader.java:Unknown line)
+	java.security.SecureClassLoader.defineClass(SecureClassLoader.java:Unknown line)
+	java.net.URLClassLoader.defineClass(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader.access$100(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader.findClass(URLClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:Unknown line)
+TRACE 301315: (thread=200001)
+	sun.net.www.protocol.file.FileURLConnection.getPermission(FileURLConnection.java:Unknown line)
+	java.net.URLClassLoader.getPermissions(URLClassLoader.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.getPermissions(Launcher.java:Unknown line)
+	java.security.SecureClassLoader.getProtectionDomain(SecureClassLoader.java:Unknown line)
+	java.security.SecureClassLoader.defineClass(SecureClassLoader.java:Unknown line)
+	java.net.URLClassLoader.defineClass(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader.access$100(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader.findClass(URLClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:Unknown line)
+TRACE 301435: (thread=200001)
+	java.io.FilePermission.init(FilePermission.java:Unknown line)
+	java.io.FilePermission.<init>(FilePermission.java:Unknown line)
+	java.net.URLClassLoader.getPermissions(URLClassLoader.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.getPermissions(Launcher.java:Unknown line)
+	java.security.SecureClassLoader.getProtectionDomain(SecureClassLoader.java:Unknown line)
+	java.security.SecureClassLoader.defineClass(SecureClassLoader.java:Unknown line)
+	java.net.URLClassLoader.defineClass(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader.access$100(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader.findClass(URLClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:Unknown line)
+TRACE 301529: (thread=200001)
+	java.io.ObjectStreamField.<init>(ObjectStreamField.java:Unknown line)
+	java.io.ObjectStreamField.<init>(ObjectStreamField.java:Unknown line)
+	java.security.BasicPermissionCollection.<clinit>(BasicPermission.java:Unknown line)
+	java.security.BasicPermission.newPermissionCollection(BasicPermission.java:Unknown line)
+	java.security.Permissions.getPermissionCollection(Permissions.java:Unknown line)
+	java.security.Permissions.add(Permissions.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.getPermissions(Launcher.java:Unknown line)
+	java.security.SecureClassLoader.getProtectionDomain(SecureClassLoader.java:Unknown line)
+	java.security.SecureClassLoader.defineClass(SecureClassLoader.java:Unknown line)
+	java.net.URLClassLoader.defineClass(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader.access$100(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader.findClass(URLClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:Unknown line)
+TRACE 301697: (thread=200001)
+	java.nio.DirectLongBufferU.get(DirectLongBufferU.java:Unknown line)
+	sun.misc.PerfCounter.get(PerfCounter.java:Unknown line)
+	sun.misc.PerfCounter.add(PerfCounter.java:Unknown line)
+	sun.misc.PerfCounter.addTime(PerfCounter.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:Unknown line)
+TRACE 301816: (thread=200001)
+	java.lang.reflect.Method.<init>(Method.java:Unknown line)
+	java.lang.reflect.Method.copy(Method.java:Unknown line)
+	java.lang.reflect.ReflectAccess.copyMethod(ReflectAccess.java:Unknown line)
+	sun.reflect.ReflectionFactory.copyMethod(ReflectionFactory.java:Unknown line)
+	java.lang.Class.searchMethods(Class.java:Unknown line)
+	java.lang.Class.privateGetMethodRecursive(Class.java:Unknown line)
+	java.lang.Class.getMethod0(Class.java:Unknown line)
+	java.lang.Class.getMethod(Class.java:Unknown line)
+	sun.launcher.LauncherHelper.validateMainClass(LauncherHelper.java:Unknown line)
+	sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:Unknown line)
+TRACE 301910: (thread=200001)
+	java.util.concurrent.ConcurrentHashMap.spread(ConcurrentHashMap.java:Unknown line)
+	java.util.concurrent.ConcurrentHashMap.putVal(ConcurrentHashMap.java:Unknown line)
+	java.util.concurrent.ConcurrentHashMap.putIfAbsent(ConcurrentHashMap.java:Unknown line)
+	java.lang.ClassLoader.getClassLoadingLock(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 301962: (thread=200001)
+	java.util.ArrayList.ensureCapacityInternal(ArrayList.java:Unknown line)
+	java.util.ArrayList.add(ArrayList.java:Unknown line)
+	java.lang.String.split(String.java:Unknown line)
+	java.lang.String.split(String.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 301963: (thread=200001)
+	java.util.ArrayList.add(ArrayList.java:Unknown line)
+	java.lang.String.split(String.java:Unknown line)
+	java.lang.String.split(String.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 301964: (thread=200001)
+	java.util.ArrayList.size(ArrayList.java:Unknown line)
+	java.lang.String.split(String.java:Unknown line)
+	java.lang.String.split(String.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 301981: (thread=200001)
+	java.util.ArrayList$SubList.listIterator(ArrayList.java:Unknown line)
+	java.util.AbstractList.listIterator(AbstractList.java:Unknown line)
+	java.util.ArrayList$SubList.iterator(ArrayList.java:Unknown line)
+	java.util.AbstractCollection.toArray(AbstractCollection.java:Unknown line)
+	java.lang.String.split(String.java:Unknown line)
+	java.lang.String.split(String.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302056: (thread=200001)
+	java.util.ArrayList.size(ArrayList.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302057: (thread=200001)
+	java.util.ArrayList.rangeCheck(ArrayList.java:Unknown line)
+	java.util.ArrayList.remove(ArrayList.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302058: (thread=200001)
+	java.util.ArrayList.elementData(ArrayList.java:Unknown line)
+	java.util.ArrayList.remove(ArrayList.java:Unknown line)
+	Finderal.pathFinder(Finderal.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302089: (thread=200001)
+	java.io.Writer.write(Writer.java:Unknown line)
+	java.io.PrintStream.write(PrintStream.java:Unknown line)
+	java.io.PrintStream.print(PrintStream.java:Unknown line)
+	java.io.PrintStream.println(PrintStream.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302106: (thread=200001)
+	java.nio.ByteBuffer.arrayOffset(ByteBuffer.java:Unknown line)
+	sun.nio.cs.UTF_8$Encoder.encodeArrayLoop(UTF_8.java:Unknown line)
+	sun.nio.cs.UTF_8$Encoder.encodeLoop(UTF_8.java:Unknown line)
+	java.nio.charset.CharsetEncoder.encode(CharsetEncoder.java:Unknown line)
+	sun.nio.cs.StreamEncoder.implWrite(StreamEncoder.java:Unknown line)
+	sun.nio.cs.StreamEncoder.write(StreamEncoder.java:Unknown line)
+	java.io.OutputStreamWriter.write(OutputStreamWriter.java:Unknown line)
+	java.io.BufferedWriter.flushBuffer(BufferedWriter.java:Unknown line)
+	java.io.PrintStream.write(PrintStream.java:Unknown line)
+	java.io.PrintStream.print(PrintStream.java:Unknown line)
+	java.io.PrintStream.println(PrintStream.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302117: (thread=200001)
+	java.nio.charset.CharsetEncoder.encode(CharsetEncoder.java:Unknown line)
+	sun.nio.cs.StreamEncoder.implWrite(StreamEncoder.java:Unknown line)
+	sun.nio.cs.StreamEncoder.write(StreamEncoder.java:Unknown line)
+	java.io.OutputStreamWriter.write(OutputStreamWriter.java:Unknown line)
+	java.io.BufferedWriter.flushBuffer(BufferedWriter.java:Unknown line)
+	java.io.PrintStream.write(PrintStream.java:Unknown line)
+	java.io.PrintStream.print(PrintStream.java:Unknown line)
+	java.io.PrintStream.println(PrintStream.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302147: (thread=200001)
+	java.io.PrintStream.ensureOpen(PrintStream.java:Unknown line)
+	java.io.PrintStream.newLine(PrintStream.java:Unknown line)
+	java.io.PrintStream.println(PrintStream.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302252: (thread=200001)
+	sun.misc.FloatingDecimal.<clinit>(FloatingDecimal.java:Unknown line)
+	java.lang.AbstractStringBuilder.append(AbstractStringBuilder.java:Unknown line)
+	java.lang.StringBuilder.append(StringBuilder.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302284: (thread=200001)
+	sun.misc.FDBigInteger.makeImmutable(FDBigInteger.java:Unknown line)
+	sun.misc.FDBigInteger.<clinit>(FDBigInteger.java:Unknown line)
+	sun.misc.FloatingDecimal$BinaryToASCIIBuffer.dtoa(FloatingDecimal.java:Unknown line)
+	sun.misc.FloatingDecimal$BinaryToASCIIBuffer.access$100(FloatingDecimal.java:Unknown line)
+	sun.misc.FloatingDecimal.getBinaryToASCIIConverter(FloatingDecimal.java:Unknown line)
+	sun.misc.FloatingDecimal.getBinaryToASCIIConverter(FloatingDecimal.java:Unknown line)
+	sun.misc.FloatingDecimal.appendTo(FloatingDecimal.java:Unknown line)
+	java.lang.AbstractStringBuilder.append(AbstractStringBuilder.java:Unknown line)
+	java.lang.StringBuilder.append(StringBuilder.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302289: (thread=200001)
+	sun.misc.FDBigInteger.<clinit>(FDBigInteger.java:Unknown line)
+	sun.misc.FloatingDecimal$BinaryToASCIIBuffer.dtoa(FloatingDecimal.java:Unknown line)
+	sun.misc.FloatingDecimal$BinaryToASCIIBuffer.access$100(FloatingDecimal.java:Unknown line)
+	sun.misc.FloatingDecimal.getBinaryToASCIIConverter(FloatingDecimal.java:Unknown line)
+	sun.misc.FloatingDecimal.getBinaryToASCIIConverter(FloatingDecimal.java:Unknown line)
+	sun.misc.FloatingDecimal.appendTo(FloatingDecimal.java:Unknown line)
+	java.lang.AbstractStringBuilder.append(AbstractStringBuilder.java:Unknown line)
+	java.lang.StringBuilder.append(StringBuilder.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302303: (thread=200001)
+	java.lang.AbstractStringBuilder.append(AbstractStringBuilder.java:Unknown line)
+	java.lang.StringBuilder.append(StringBuilder.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+TRACE 302362: (thread=200001)
+	java.io.BufferedOutputStream.flush(BufferedOutputStream.java:Unknown line)
+	java.io.PrintStream.write(PrintStream.java:Unknown line)
+	sun.nio.cs.StreamEncoder.writeBytes(StreamEncoder.java:Unknown line)
+	sun.nio.cs.StreamEncoder.implFlushBuffer(StreamEncoder.java:Unknown line)
+	sun.nio.cs.StreamEncoder.flushBuffer(StreamEncoder.java:Unknown line)
+	java.io.OutputStreamWriter.flushBuffer(OutputStreamWriter.java:Unknown line)
+	java.io.PrintStream.write(PrintStream.java:Unknown line)
+	java.io.PrintStream.print(PrintStream.java:Unknown line)
+	java.io.PrintStream.println(PrintStream.java:Unknown line)
+	Finderal.main(Finderal.java:Unknown line)
+CPU TIME (ms) BEGIN (total = 2989) Mon Feb 25 17:12:41 2019
+rank   self  accum   count trace method
+   1 50,05% 50,05%    7893 302079 java.util.ArrayList.indexOf
+   2 38,37% 88,42% 1529001 302081 java.awt.Point.equals
+   3  1,84% 90,26%      10 302082 Finderal.pathFinder
+   4  1,10% 91,37%   11012 302078 java.util.ArrayList$Itr.next
+   5  0,70% 92,07%    5516 302068 java.util.ArrayList.ensureCapacityInternal
+   6  0,67% 92,74%    1945 302070 Finderal.getPossibleNextPositions
+   7  0,60% 93,34%   14890 302075 java.util.ArrayList$Itr.hasNext
+   8  0,54% 93,88%    7893 302080 java.util.ArrayList.contains
+   9  0,47% 94,35%    4339 302055 java.util.ArrayList.add
+  10  0,47% 94,81%   14890 302074 java.util.ArrayList.access$000
+  11  0,43% 95,25%    5516 302069 java.util.ArrayList.add
+  12  0,40% 95,65%   11012 302076 java.util.ArrayList$Itr.checkForComodification
+  13  0,37% 96,02%    4339 302054 java.util.ArrayList.ensureCapacityInternal
+  14  0,33% 96,35%    5516 302065 java.awt.Point.<init>
+  15  0,33% 96,69%   11012 302077 java.util.ArrayList.access$000
+  16  0,27% 96,96%    3884 302073 java.util.ArrayList.iterator
+  17  0,20% 97,16%    1945 302059 java.util.ArrayList.remove
+  18  0,20% 97,36%    1945 302062 java.util.ArrayList.<init>
+  19  0,20% 97,56%    5516 302064 java.awt.geom.Point2D.<init>
+  20  0,17% 97,72%    5516 302066 java.util.ArrayList.calculateCapacity
+  21  0,13% 97,86%    1945 302060 java.util.AbstractCollection.<init>
+  22  0,13% 97,99%    1945 302061 java.util.AbstractList.<init>
+  23  0,13% 98,13%    7021 302063 java.lang.String.charAt
+  24  0,10% 98,23%      11 300657 sun.misc.URLClassPath$3.run
+  25  0,10% 98,33%    3884 302072 java.util.ArrayList$Itr.<init>
+  26  0,10% 98,43%     326 302288 sun.misc.FDBigInteger.mult
+  27  0,07% 98,49%    4339 302053 java.util.ArrayList.ensureExplicitCapacity
+  28  0,07% 98,56%    5516 302067 java.util.ArrayList.ensureExplicitCapacity
+  29  0,03% 98,59%       1 300024 java.lang.Class.getClassLoader
+  30  0,03% 98,63%       1 300084 java.lang.ref.WeakReference.<init>
+  31  0,03% 98,66%       1 300094 java.lang.invoke.MethodHandleImpl.<clinit>
+  32  0,03% 98,70%       1 300139 java.lang.invoke.MethodHandleStatics$1.run
+  33  0,03% 98,73%       1 300170 java.lang.invoke.MethodHandle.<clinit>
+  34  0,03% 98,76%       7 300240 java.lang.AbstractStringBuilder.append
+  35  0,03% 98,80%       1 300390 java.util.concurrent.ConcurrentHashMap.putVal
+  36  0,03% 98,83%      11 300446 java.util.Stack.peek
+  37  0,03% 98,86%      44 300462 java.lang.AbstractStringBuilder.ensureCapacityInternal
+  38  0,03% 98,90%      30 300535 java.lang.StringBuffer.append
+  39  0,03% 98,93%      10 300540 java.net.URLStreamHandler.toExternalForm
+  40  0,03% 98,96%      10 300597 java.io.UnixFileSystem.normalize
+  41  0,03% 99,00%      10 300638 java.util.Arrays.copyOf
+  42  0,03% 99,03%      10 300643 java.lang.String.getBytes
+  43  0,03% 99,06%      10 300656 sun.misc.URLClassPath$JarLoader.<init>
+  44  0,03% 99,10%       2 300884 java.net.URLStreamHandler.parseURL
+  45  0,03% 99,13%       1 300985 sun.misc.URLClassPath$FileLoader.getResource
+  46  0,03% 99,16%       1 301076 sun.misc.Perf$GetPerfAction.run
+  47  0,03% 99,20%       6 301127 java.nio.DirectByteBuffer.asLongBuffer
+  48  0,03% 99,23%       1 301196 java.security.SecureClassLoader.getPermissions
+  49  0,03% 99,26%       1 301247 sun.net.www.protocol.file.Handler.createFileURLConnection
+  50  0,03% 99,30%       1 301315 sun.net.www.protocol.file.FileURLConnection.getPermission
+  51  0,03% 99,33%       1 301435 java.io.FilePermission.init
+  52  0,03% 99,36%       3 301529 java.io.ObjectStreamField.<init>
+  53  0,03% 99,40%       1 301697 java.nio.DirectLongBufferU.get
+  54  0,03% 99,43%       1 301816 java.lang.reflect.Method.<init>
+  55  0,03% 99,46%       3 301910 java.util.concurrent.ConcurrentHashMap.spread
+  56  0,03% 99,50%      78 301962 java.util.ArrayList.ensureCapacityInternal
+  57  0,03% 99,53%      78 301963 java.util.ArrayList.add
+  58  0,03% 99,57%      10 301964 java.util.ArrayList.size
+  59  0,03% 99,60%      10 301981 java.util.ArrayList$SubList.listIterator
+  60  0,03% 99,63%    1949 302056 java.util.ArrayList.size
+  61  0,03% 99,67%    1945 302057 java.util.ArrayList.rangeCheck
+  62  0,03% 99,70%    1945 302058 java.util.ArrayList.elementData
+  63  0,03% 99,73%      10 302089 java.io.Writer.write
+  64  0,03% 99,77%      20 302106 java.nio.ByteBuffer.arrayOffset
+  65  0,03% 99,80%      10 302117 java.nio.charset.CharsetEncoder.encode
+  66  0,03% 99,83%      10 302147 java.io.PrintStream.ensureOpen
+  67  0,03% 99,87%       1 302252 sun.misc.FloatingDecimal.<clinit>
+  68  0,03% 99,90%     341 302284 sun.misc.FDBigInteger.makeImmutable
+  69  0,03% 99,93%       1 302289 sun.misc.FDBigInteger.<clinit>
+  70  0,03% 99,97%       1 302303 java.lang.AbstractStringBuilder.append
+  71  0,03% 100,00%       1 302362 java.io.BufferedOutputStream.flush
+CPU TIME (ms) END

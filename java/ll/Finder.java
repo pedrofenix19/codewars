@@ -145,7 +145,7 @@ public class Finder {
                 ".WWWWWWWWWWWW\n"+
                 ".............";
 
-        long startTime = System.currentTimeMillis();
+        long startTime = System.nanoTime();
 
         System.out.println(Finder.pathFinder(a));
         System.out.println(Finder.pathFinder(b));
@@ -158,7 +158,7 @@ public class Finder {
         System.out.println(Finder.pathFinder(i));
         System.out.println(Finder.pathFinder(j));
 
-        long endTime = System.currentTimeMillis();
+        long endTime = System.nanoTime();
 
         System.out.println("Execution time is " + (endTime - startTime) / 1000d + " seconds");
 

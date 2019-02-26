@@ -160,7 +160,7 @@ public class Finderal {
 
         long endTime = System.currentTimeMillis();
 
-        System.out.println("Execution time is " + (endTime - startTime) + " seconds");
+        System.out.println("Execution time is " + (endTime - startTime) / 1000d + " seconds");
 
     }
 }

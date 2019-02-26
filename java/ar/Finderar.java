@@ -1,33 +1,39 @@
-import java.awt.Point;
 import java.util.ArrayList;
 
-public class Finderal {
+public class Finderar {
 
-    static ArrayList<Point> getPossibleNextPositions(String[] mazearr, Point currentPosition){
-        ArrayList<Point> possibleNextPositions = new ArrayList<Point>(4);
+    static ArrayList<int[]> getPossibleNextPositions(String[] mazearr, int[] currentPosition){
+        ArrayList<int[]> possibleNextPositions = new ArrayList<int[]>(4);
         int n = mazearr.length;
 
         //if can move down
-        if(currentPosition.x < n - 1 && mazearr[currentPosition.x + 1].charAt(currentPosition.y) != 'W'){
-            possibleNextPositions.add(new Point(currentPosition.x + 1, currentPosition.y));
+        if(currentPosition[0] < n - 1 && mazearr[currentPosition[0] + 1].charAt(currentPosition[1]) != 'W'){
+            possibleNextPositions.add(new int[]{currentPosition[0] + 1, currentPosition[1]});
         }
 
         //if can move right
-        if(currentPosition.y < n - 1 && mazearr[currentPosition.x].charAt(currentPosition.y + 1) != 'W'){
-            possibleNextPositions.add(new Point(currentPosition.x, currentPosition.y + 1));
+        if(currentPosition[1] < n - 1 && mazearr[currentPosition[0]].charAt(currentPosition[1] + 1) != 'W'){
+            possibleNextPositions.add(new int[]{currentPosition[0], currentPosition[1] + 1});
         }
 
         //if can move left
-        if(currentPosition.y > 0 && mazearr[currentPosition.x].charAt(currentPosition.y - 1) != 'W'){
-            possibleNextPositions.add(new Point(currentPosition.x, currentPosition.y - 1));
+        if(currentPosition[1] > 0 && mazearr[currentPosition[0]].charAt(currentPosition[1] - 1) != 'W'){
+            possibleNextPositions.add(new int[]{currentPosition[0], currentPosition[1] - 1});
         }
 
         //if can move up
-        if(currentPosition.x > 0 && mazearr[currentPosition.x - 1].charAt(currentPosition.y) != 'W'){
-            possibleNextPositions.add(new Point(currentPosition.x - 1, currentPosition.y));
+        if(currentPosition[0] > 0 && mazearr[currentPosition[0] - 1].charAt(currentPosition[1]) != 'W'){
+            possibleNextPositions.add(new int[]{currentPosition[0] - 1, currentPosition[1]});
         }
 
         return possibleNextPositions;
+    }
+
+    static boolean pointIsInArray(ArrayList<int[]> list, int[] point){
+        for(int[] p: list){
+            if(p[0] == point[0] && p[1] == point[1]) return true;
+        }
+        return false;
     }
 
     
@@ -35,20 +41,20 @@ public class Finderal {
         String[] mazearr = maze.split("\n");
         int n = mazearr.length;
         if(n == 1) return true;
-        ArrayList<Point> openPoints = new ArrayList<Point>(n * n);
-        openPoints.add(new Point(0,0));
-        ArrayList<Point> closedPoints = new ArrayList<Point>(n * n);
+        ArrayList<int[]> openPoints = new ArrayList<int[]>(n * n);
+        openPoints.add(new int[]{0,0});
+        ArrayList<int[]> closedPoints = new ArrayList<int[]>(n * n);
 
         while (openPoints.size() > 0) {
-            Point currentPoint = openPoints.remove(0);
-            ArrayList<Point> possibleNextPoints = getPossibleNextPositions(mazearr, currentPoint);
+            int[] currentPoint = openPoints.remove(0);
+            ArrayList<int[]> possibleNextPoints = getPossibleNextPositions(mazearr, currentPoint);
 
-            for (Point p : possibleNextPoints) {
-                if(p.x == n -1 && p.y == n - 1) return true;
+            for (int[] p : possibleNextPoints) {
+                if(p[0] == n -1 && p[1] == n - 1) return true;
             }
 
-            for (Point p : possibleNextPoints) {
-                if(!closedPoints.contains(p) && !closedPoints.contains(p)) openPoints.add(p);
+            for (int[] p : possibleNextPoints) {
+                if(!pointIsInArray(closedPoints,p) && !pointIsInArray(closedPoints,p)) openPoints.add(p);
             }
             closedPoints.add(currentPoint);
         }
@@ -147,16 +153,16 @@ public class Finderal {
 
         long startTime = System.currentTimeMillis();
 
-        System.out.println(Finderal.pathFinder(a));
-        System.out.println(Finderal.pathFinder(b));
-        System.out.println(Finderal.pathFinder(c));
-        System.out.println(Finderal.pathFinder(d));
-        System.out.println(Finderal.pathFinder(e));
-        System.out.println(Finderal.pathFinder(f));
-        System.out.println(Finderal.pathFinder(g));
-        System.out.println(Finderal.pathFinder(h));
-        System.out.println(Finderal.pathFinder(i));
-        System.out.println(Finderal.pathFinder(j));
+        System.out.println(Finderar.pathFinder(a));
+        System.out.println(Finderar.pathFinder(b));
+        System.out.println(Finderar.pathFinder(c));
+        System.out.println(Finderar.pathFinder(d));
+        System.out.println(Finderar.pathFinder(e));
+        System.out.println(Finderar.pathFinder(f));
+        System.out.println(Finderar.pathFinder(g));
+        System.out.println(Finderar.pathFinder(h));
+        System.out.println(Finderar.pathFinder(i));
+        System.out.println(Finderar.pathFinder(j));
 
         long endTime = System.currentTimeMillis();
 

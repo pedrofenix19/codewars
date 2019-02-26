@@ -1,0 +1,318 @@
+JAVA PROFILE 1.0.1, created Tue Feb 26 09:33:00 2019
+
+Copyright (c) 2003, 2005, Oracle and/or its affiliates. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions
+are met:
+
+  - Redistributions of source code must retain the above copyright
+    notice, this list of conditions and the following disclaimer.
+
+  - Redistributions in binary form must reproduce the above copyright
+    notice, this list of conditions and the following disclaimer in the
+    documentation and/or other materials provided with the distribution.
+
+  - Neither the name of Oracle nor the names of its
+    contributors may be used to endorse or promote products derived
+    from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS
+IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+Header for -agentlib:hprof (or -Xrunhprof) ASCII Output (JDK 5.0 JVMTI based)
+
+WARNING!  This file format is under development, and is subject to
+change without notice.
+
+This file contains the following types of records:
+
+THREAD START
+THREAD END      mark the lifetime of Java threads
+
+TRACE           represents a Java stack trace.  Each trace consists
+                of a series of stack frames.  Other records refer to
+                TRACEs to identify (1) where object allocations have
+                taken place, (2) the frames in which GC roots were
+                found, and (3) frequently executed methods.
+
+HEAP DUMP       is a complete snapshot of all live objects in the Java
+                heap.  Following distinctions are made:
+
+                ROOT    root set as determined by GC
+                CLS     classes 
+                OBJ     instances
+                ARR     arrays
+
+SITES           is a sorted list of allocation sites.  This identifies
+                the most heavily allocated object types, and the TRACE
+                at which those allocations occurred.
+
+CPU SAMPLES     is a statistical profile of program execution.  The VM
+                periodically samples all running threads, and assigns
+                a quantum to active TRACEs in those threads.  Entries
+                in this record are TRACEs ranked by the percentage of
+                total quanta they consumed; top-ranked TRACEs are
+                typically hot spots in the program.
+
+CPU TIME        is a profile of program execution obtained by measuring
+                the time spent in individual methods (excluding the time
+                spent in callees), as well as by counting the number of
+                times each method is called. Entries in this record are
+                TRACEs ranked by the percentage of total CPU time. The
+                "count" field indicates the number of times each TRACE 
+                is invoked.
+
+MONITOR TIME    is a profile of monitor contention obtained by measuring
+                the time spent by a thread waiting to enter a monitor.
+                Entries in this record are TRACEs ranked by the percentage
+                of total monitor contention time and a brief description
+                of the monitor.  The "count" field indicates the number of 
+                times the monitor was contended at that TRACE.
+
+MONITOR DUMP    is a complete snapshot of all the monitors and threads in 
+                the System.
+
+HEAP DUMP, SITES, CPU SAMPLES|TIME and MONITOR DUMP|TIME records are generated 
+at program exit.  They can also be obtained during program execution by typing 
+Ctrl-\ (on Solaris) or by typing Ctrl-Break (on Win32).
+
+--------
+
+THREAD START (obj=50000180, id = 200002, name="HPROF gc_finish watcher", group="system")
+THREAD START (obj=50000190, id = 200001, name="main", group="main")
+THREAD END (id = 200001)
+THREAD START (obj=500001bc, id = 200003, name="DestroyJavaVM", group="main")
+THREAD END (id = 200003)
+TRACE 302082: (thread=200001)
+	java.util.ArrayList$Itr.next(ArrayList.java:Unknown line)
+	Finderar.pointIsInArray(Finderar.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302079: (thread=200001)
+	Finderar.pointIsInArray(Finderar.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302078: (thread=200001)
+	java.util.ArrayList$Itr.hasNext(ArrayList.java:Unknown line)
+	Finderar.pointIsInArray(Finderar.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302080: (thread=200001)
+	java.util.ArrayList$Itr.checkForComodification(ArrayList.java:Unknown line)
+	java.util.ArrayList$Itr.next(ArrayList.java:Unknown line)
+	Finderar.pointIsInArray(Finderar.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302081: (thread=200001)
+	java.util.ArrayList.access$000(ArrayList.java:Unknown line)
+	java.util.ArrayList$Itr.next(ArrayList.java:Unknown line)
+	Finderar.pointIsInArray(Finderar.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302077: (thread=200001)
+	java.util.ArrayList.access$000(ArrayList.java:Unknown line)
+	java.util.ArrayList$Itr.hasNext(ArrayList.java:Unknown line)
+	Finderar.pointIsInArray(Finderar.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302083: (thread=200001)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302071: (thread=200001)
+	java.util.ArrayList$Itr.hasNext(ArrayList.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302074: (thread=200001)
+	java.util.ArrayList$Itr.next(ArrayList.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302076: (thread=200001)
+	java.util.ArrayList.iterator(ArrayList.java:Unknown line)
+	Finderar.pointIsInArray(Finderar.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302052: (thread=200001)
+	java.util.ArrayList.ensureCapacityInternal(ArrayList.java:Unknown line)
+	java.util.ArrayList.add(ArrayList.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302066: (thread=200001)
+	Finderar.getPossibleNextPositions(Finderar.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302064: (thread=200001)
+	java.util.ArrayList.ensureCapacityInternal(ArrayList.java:Unknown line)
+	java.util.ArrayList.add(ArrayList.java:Unknown line)
+	Finderar.getPossibleNextPositions(Finderar.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302072: (thread=200001)
+	java.util.ArrayList$Itr.checkForComodification(ArrayList.java:Unknown line)
+	java.util.ArrayList$Itr.next(ArrayList.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302075: (thread=200001)
+	java.util.ArrayList$Itr.<init>(ArrayList.java:Unknown line)
+	java.util.ArrayList.iterator(ArrayList.java:Unknown line)
+	Finderar.pointIsInArray(Finderar.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302053: (thread=200001)
+	java.util.ArrayList.add(ArrayList.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302057: (thread=200001)
+	java.util.ArrayList.remove(ArrayList.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302059: (thread=200001)
+	java.util.AbstractList.<init>(AbstractList.java:Unknown line)
+	java.util.ArrayList.<init>(ArrayList.java:Unknown line)
+	Finderar.getPossibleNextPositions(Finderar.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302065: (thread=200001)
+	java.util.ArrayList.add(ArrayList.java:Unknown line)
+	Finderar.getPossibleNextPositions(Finderar.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302069: (thread=200001)
+	java.util.ArrayList.iterator(ArrayList.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302070: (thread=200001)
+	java.util.ArrayList.access$000(ArrayList.java:Unknown line)
+	java.util.ArrayList$Itr.hasNext(ArrayList.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302073: (thread=200001)
+	java.util.ArrayList.access$000(ArrayList.java:Unknown line)
+	java.util.ArrayList$Itr.next(ArrayList.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302055: (thread=200001)
+	java.util.ArrayList.rangeCheck(ArrayList.java:Unknown line)
+	java.util.ArrayList.remove(ArrayList.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302060: (thread=200001)
+	java.util.ArrayList.<init>(ArrayList.java:Unknown line)
+	Finderar.getPossibleNextPositions(Finderar.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302061: (thread=200001)
+	java.lang.String.charAt(String.java:Unknown line)
+	Finderar.getPossibleNextPositions(Finderar.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302063: (thread=200001)
+	java.util.ArrayList.ensureExplicitCapacity(ArrayList.java:Unknown line)
+	java.util.ArrayList.ensureCapacityInternal(ArrayList.java:Unknown line)
+	java.util.ArrayList.add(ArrayList.java:Unknown line)
+	Finderar.getPossibleNextPositions(Finderar.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302068: (thread=200001)
+	java.util.ArrayList$Itr.<init>(ArrayList.java:Unknown line)
+	java.util.ArrayList.iterator(ArrayList.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302051: (thread=200001)
+	java.util.ArrayList.ensureExplicitCapacity(ArrayList.java:Unknown line)
+	java.util.ArrayList.ensureCapacityInternal(ArrayList.java:Unknown line)
+	java.util.ArrayList.add(ArrayList.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 300596: (thread=200001)
+	java.lang.String.charAt(String.java:Unknown line)
+	java.io.UnixFileSystem.normalize(UnixFileSystem.java:Unknown line)
+	java.io.File.<init>(File.java:Unknown line)
+	sun.misc.URLClassPath$JarLoader.<init>(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath$3.run(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath$3.run(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getNextLoader(URLClassPath.java:Unknown line)
+	sun.misc.URLClassPath.getResource(URLClassPath.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader$1.run(URLClassLoader.java:Unknown line)
+	java.net.URLClassLoader.findClass(URLClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:Unknown line)
+	java.lang.ClassLoader.loadClass(ClassLoader.java:Unknown line)
+	sun.launcher.LauncherHelper.checkAndLoadMain(LauncherHelper.java:Unknown line)
+TRACE 301952: (thread=200001)
+	java.lang.Math.min(Math.java:Unknown line)
+	java.util.Arrays.copyOfRange(Arrays.java:Unknown line)
+	java.lang.String.<init>(String.java:Unknown line)
+	java.lang.String.substring(String.java:Unknown line)
+	java.lang.String.split(String.java:Unknown line)
+	java.lang.String.split(String.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302050: (thread=200001)
+	java.util.ArrayList.calculateCapacity(ArrayList.java:Unknown line)
+	java.util.ArrayList.ensureCapacityInternal(ArrayList.java:Unknown line)
+	java.util.ArrayList.add(ArrayList.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302056: (thread=200001)
+	java.util.ArrayList.elementData(ArrayList.java:Unknown line)
+	java.util.ArrayList.remove(ArrayList.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+TRACE 302062: (thread=200001)
+	java.util.ArrayList.calculateCapacity(ArrayList.java:Unknown line)
+	java.util.ArrayList.ensureCapacityInternal(ArrayList.java:Unknown line)
+	java.util.ArrayList.add(ArrayList.java:Unknown line)
+	Finderar.getPossibleNextPositions(Finderar.java:Unknown line)
+	Finderar.pathFinder(Finderar.java:Unknown line)
+	Finderar.main(Finderar.java:Unknown line)
+CPU TIME (ms) BEGIN (total = 13239) Tue Feb 26 09:33:13 2019
+rank   self  accum   count trace method
+   1 30,82% 30,82% 1529001 302082 java.util.ArrayList$Itr.next
+   2 23,08% 53,89%    7893 302079 Finderar.pointIsInArray
+   3 19,58% 73,47% 1533781 302078 java.util.ArrayList$Itr.hasNext
+   4  8,21% 81,68% 1529001 302080 java.util.ArrayList$Itr.checkForComodification
+   5  8,10% 89,78% 1529001 302081 java.util.ArrayList.access$000
+   6  7,83% 97,61% 1533781 302077 java.util.ArrayList.access$000
+   7  0,32% 97,94%      10 302083 Finderar.pathFinder
+   8  0,21% 98,15%   14890 302071 java.util.ArrayList$Itr.hasNext
+   9  0,17% 98,32%   11012 302074 java.util.ArrayList$Itr.next
+  10  0,17% 98,50%    7893 302076 java.util.ArrayList.iterator
+  11  0,16% 98,66%    4339 302052 java.util.ArrayList.ensureCapacityInternal
+  12  0,15% 98,81%    1945 302066 Finderar.getPossibleNextPositions
+  13  0,14% 98,95%    5516 302064 java.util.ArrayList.ensureCapacityInternal
+  14  0,08% 99,03%   11012 302072 java.util.ArrayList$Itr.checkForComodification
+  15  0,08% 99,10%    7893 302075 java.util.ArrayList$Itr.<init>
+  16  0,06% 99,16%    4339 302053 java.util.ArrayList.add
+  17  0,06% 99,22%    1945 302057 java.util.ArrayList.remove
+  18  0,05% 99,27%    1945 302059 java.util.AbstractList.<init>
+  19  0,05% 99,33%    5516 302065 java.util.ArrayList.add
+  20  0,05% 99,38%    3884 302069 java.util.ArrayList.iterator
+  21  0,05% 99,43%   14890 302070 java.util.ArrayList.access$000
+  22  0,05% 99,47%   11012 302073 java.util.ArrayList.access$000
+  23  0,04% 99,51%    1945 302055 java.util.ArrayList.rangeCheck
+  24  0,03% 99,54%    1945 302060 java.util.ArrayList.<init>
+  25  0,03% 99,57%    7021 302061 java.lang.String.charAt
+  26  0,03% 99,60%    5516 302063 java.util.ArrayList.ensureExplicitCapacity
+  27  0,03% 99,63%    3884 302068 java.util.ArrayList$Itr.<init>
+  28  0,02% 99,65%    4339 302051 java.util.ArrayList.ensureExplicitCapacity
+  29  0,02% 99,67%     506 300596 java.lang.String.charAt
+  30  0,02% 99,68%      78 301952 java.lang.Math.min
+  31  0,02% 99,70%    4339 302050 java.util.ArrayList.calculateCapacity
+  32  0,02% 99,71%    1945 302056 java.util.ArrayList.elementData
+  33  0,02% 99,73%    5516 302062 java.util.ArrayList.calculateCapacity
+CPU TIME (ms) END
