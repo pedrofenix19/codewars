@@ -18,9 +18,18 @@ def get_possible_next_positions(mazearr, pos):
 
     return pnp
 
+def pointIsOpen(list, point):
+  return point in list
+
+def pointIsClosed(list, point):
+  return point in list
+
+
 def path_finder(maze):
     mazearr = maze.split("\n")
     n = len(mazearr)
+    if n == 1:
+        return True
     open_points = [(0,0)]
     closed_points = []
     while len(open_points) > 0:
@@ -31,7 +40,7 @@ def path_finder(maze):
             return True
 
         for i in pnp:
-            if not i in open_points and not i in closed_points:
+            if not pointIsOpen(open_points,i) and not pointIsClosed(closed_points,i):
                 open_points.append(i)
 
         closed_points.append(current_point)
@@ -148,9 +157,8 @@ def main():
     "............."
     ])
 
-    for x in range(50):
-      for i in [a,b,c,d,e,f,g,h,i,j]:
-        print(str(path_finder(i)))
+    for i in [a,b,c,d,e,f,g,h,i,j]:
+        path_finder(i)
 
 
 
