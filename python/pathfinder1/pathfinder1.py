@@ -1,4 +1,5 @@
 import cProfile
+import mazes
 
 def get_possible_next_positions(mazearr, pos):
     pnp = []
@@ -48,118 +49,12 @@ def path_finder(maze):
     return False 
 
 
-def main():
-    a = "\n".join([
-      ".W.",
-      ".W.",
-      "..."
-    ])
-
-    b = "\n".join([
-      ".W.",
-      ".W.",
-      "W.."
-    ])
-
-    c = "\n".join([
-      "......",
-      "......",
-      "......",
-      "......",
-      "......",
-      "......"
-    ])
-
-    d = "\n".join([
-      "......",
-      "......",
-      "......",
-      "......",
-      ".....W",
-      "....W."
-    ])
-
-    e = "\n".join([
-      ".W....",
-      ".W.WW.",
-      ".W.W..",
-      ".W.W.W",
-      ".W.W..",
-      "...W.."
-    ])
-
-    f = "\n".join([
-    ".W....",
-    ".W.WW.",
-    ".W.W..",
-    ".W.W.W",
-    ".W.W..",
-    "...W.W"
-    ])
-
-    g = "\n".join([
-    "..W...W.W ",
-    "..WW..WWW ",
-    ".....W... ",
-    ".W..W.... ",
-    "W....WWWW ",
-    ".......W. ",
-    "..W...... ",
-    "WW.WW..WW ",
-    ".....W..."
-    ])
-
-    h = "\n".join([
-    ".W...W...W...",
-    ".W.W.W.W.W.W.",
-    ".W.W.W.W.W.W.",
-    ".W.W.W.W.W.W.",
-    ".W.W.W.W.W.W.",
-    ".W.W.W.W.W.W.",
-    ".W.W.W.W.W.W.",
-    ".W.W.W.W.W.W.",
-    ".W.W.W.W.W.W.",
-    ".W.W.W.W.W.W.",
-    ".W.W.W.W.W.W.",
-    ".W.W.W.W.W.W.",
-    "...W...W...W."
-    ])
-
-    i = "\n".join([
-    ".W...W...W...",
-    ".W.W.W.W.W.W.",
-    ".W.W.W.W.W.W.",
-    ".W.W.W.W.W.W.",
-    ".W.W.W.W.W.W.",
-    ".W.W.W.W.W.W.",
-    ".W.W.W.W.W.W.",
-    ".W.W.W.W.W.W.",
-    ".W.W.W.W.W.W.",
-    ".W.W.W.W.W.W.",
-    ".W.W.W.W.W.W.",
-    ".W.W.W.W.W.W.",
-    "...W...W...W."
-    ])
-
-    j = "\n".join([
-    ".............",
-    "WWWWWWWWWWWW.",
-    ".............",
-    ".WWWWWWWWWWWW",
-    ".............",
-    "WWWWWWWWWWWW.",
-    "......W......",
-    ".WWWWWWWWWWWW",
-    ".............",
-    "WWWWWWWWWWWW.",
-    ".............",
-    ".WWWWWWWWWWWW",
-    "............."
-    ])
-
-    for i in [a,b,c,d,e,f,g,h,i,j]:
-        path_finder(i)
+def main(mazes):
+    n = 1
+    for i in mazes:
+        print(str(n) + ") " + str(path_finder(i)))
+        n += 1
 
 
-
-cProfile.run('main()')
+mazes = mazes.get_mazes()
+cProfile.run('main(mazes)')
