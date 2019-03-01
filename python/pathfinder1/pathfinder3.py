@@ -28,7 +28,9 @@ def path_finder(maze):
     if n == 1:
         return True
     open_points = [(0,0)]
-    closed_points = []
+    points_status = np.zeros((n,n))
+    #Mark 0,0 as open point
+    points_status[0][0] = 1
     while len(open_points) > 0:
         current_point = open_points.pop(0)
         pnp = get_possible_next_positions(mazearr, current_point)
@@ -36,8 +38,8 @@ def path_finder(maze):
             return True
 
         for i in pnp:
-            #if not inSorted(open_points,i) and not pointIsClosed(closed_points,i):
-            if not in_sorted(closed_points,i) and not in_sorted(open_points,i):
+            #if not in_sorted(closed_points,i) and not in_sorted(open_points,i):
+            if points_status[i[0]][i[1]]
                 bi.insort(open_points,i)
 
         bi.insort(closed_points,current_point)
